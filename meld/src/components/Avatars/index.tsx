@@ -13,13 +13,19 @@ const Avatars: FC = () => {
   const activeScale = 0.75 + averageFFT * 1.25;
   const inactiveScale = 1;
 
+  
+
   return (
     <div className="flex gap-32">
       {avatars.map(({ name, visual, prosody }, index) => {
         const isActive = activeAvatar === name;
-        const topProsody = prosody ? Object.keys(prosody)[0] : 'Neutral';
-        const face = getFaceByEmotion(topProsody);
+        let topProsody = prosody ? Object.keys(prosody)[0] : 'Neutral';
+        topProsody = !isActive ? 'Rest' : topProsody;
+        const face = isActive ? getFaceByEmotion(topProsody) : getFaceByEmotion('Rest');
+        // console.log('topProsody', topProsody);
+        // console.log('topProsody', topProsody);
 
+        
         return (
           <div
             key={`avatar-${index}`}
@@ -27,9 +33,9 @@ const Avatars: FC = () => {
           >
             <div
               className={cn(
-                isActive ? 'opacity-100 scale-110' : 'opacity-30 scale-100',
+                isActive ? 'opacity-90 scale-110' : 'opacity-50 scale-100',
                 visual,
-                'relative size-48 rounded-full transition-all z-20 flex items-center justify-center',
+                'relative size-60 rounded-full transition-all z-20 flex items-center justify-center',
               )}
             >
               <AnimatePresence mode="popLayout">
@@ -39,6 +45,7 @@ const Avatars: FC = () => {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
+                  // style={{ alignContent: 'center'}}
                 >
                   {face}{' '}
                 </motion.div>
@@ -48,11 +55,11 @@ const Avatars: FC = () => {
                   initial={{ scale: 1 }}
                   animate={{ scale: isActive ? activeScale : inactiveScale }}
                   transition={{ duration: 0.5 }}
-                  className={cn('relative bg-inherit rounded-full opacity-20 size-48', visual)}
+                  className={cn('relative bg-inherit rounded-full opacity-20 size-60', visual)}
                 ></motion.div>
               </div>
             </div>
-            <div className={cn('text-xl font-bold text-center')}>{name}</div>
+            <div className={cn('text-xl font-bold text-center')}>{topProsody}</div>
           </div>
         );
       })}

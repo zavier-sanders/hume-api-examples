@@ -10,6 +10,8 @@ import { match } from 'ts-pattern';
 const ChatStage: React.FC = () => {
   const { connect, disconnect, status } = useVoice();
 
+  console.log('status', status);
+
   const handleConnect = () => {
     if (status.value === 'connected') {
       disconnect();

@@ -26,12 +26,14 @@ export const useAvatars = () => useContext(AvatarContext) as AvatarContextType;
 
 export const AvatarProvider: FC<PropsWithChildren> = ({ children }) => {
   const { lastVoiceMessage } = useVoice();
+  // console.log('lastVoiceMessage', lastVoiceMessage);
+
   const prosody = lastVoiceMessage?.models.prosody?.scores ?? {};
   const [activeAvatar, setActiveAvatar] = useState<string | null>(null);
   const [avatars, setAvatars] = useState<AvatarConfig[]>([
-    { name: 'Challenger', visual: 'bg-green-500', prosody: {} },
-    { name: 'Optimist', visual: 'bg-yellow-500', prosody: {} },
-    { name: 'Synthesizer', visual: 'bg-purple-500', prosody: {} },
+    // { name: 'Challenger', visual: 'bg-green-500', prosody: {} },
+    { name: 'Sunny', visual: 'bg-yellow-500', prosody: {} },
+    // { name: 'Synthesizer', visual: 'bg-purple-500', prosody: {} },
   ]);
 
   useEffect(() => {
@@ -45,7 +47,9 @@ export const AvatarProvider: FC<PropsWithChildren> = ({ children }) => {
       const avatarName = match[1];
       setActiveAvatar(avatarName);
     }
+    setActiveAvatar('Sunny');
 
+    // updateProsody(activeAvatar || '');
     updateProsody(activeAvatar || '');
   }, [lastVoiceMessage]);
 
@@ -63,6 +67,7 @@ export const AvatarProvider: FC<PropsWithChildren> = ({ children }) => {
           {} as Record<string, number>,
         );
 
+      console.log('avatar.prosody', avatar.prosody);
       setAvatars([...avatars]);
     });
   };

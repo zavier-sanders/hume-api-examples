@@ -24,7 +24,7 @@ function App() {
     <>
       <VoiceProvider
         auth={{ type: 'accessToken', value: accessToken }}
-        configId={'<YOUR CONFIG ID>'} // set your configId here
+        configId={'036fbe3e-3d1f-4056-b707-75734074bb1f'} // set your configId here
       >
         <ChatStage />
       </VoiceProvider>
